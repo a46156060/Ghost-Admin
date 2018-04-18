@@ -154,6 +154,32 @@
                     </label>
                 </div>
 
+                {{#gh-uploader
+                    files=fileUpload
+                    extensions=extensions
+                    uploadUrl="/upload/files"
+                    onComplete=(action "fileUploaded" post.id)
+                    as |uploader|
+                }}
+                  <div class="gh-upload-file">
+                    {{#if post.file}}
+                      <span>{{post.file}}</span>
+                      <button type="button" class="gh-btn" onclick={{action "deleteFile"}}>
+                        <span>DELETE</span>
+                      </button>
+                      {{else}}
+                      <span>No File</span>
+                      <button type="button" class="gh-btn" onclick={{action "triggerFileDialog"}}>
+                        <span>Upload File</span>
+                      </button>
+                    {{/if}}
+
+                    <div style="display:none">
+                      {{gh-file-input multiple=false accept=filesMimeTypes action=(action (mut fileUpload))}}
+                    </div>
+                  </div>
+                {{/gh-uploader}}
+
                 {{gh-psm-template-select
                     post=post
                     onTemplateSelect=(action (mut post.customTemplate))}}

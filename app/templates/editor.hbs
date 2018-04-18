@@ -165,6 +165,13 @@
             modifier="action wide"}}
     {{/if}}
 
+    {{#if showDeleteFileModal}}
+        {{gh-fullscreen-modal "delete-file"
+            model=(hash post=model onSuccess=(route-action 'redirectToContentScreen'))
+            close=(action "toggleDeleteFileModal")
+            modifier="action wide"}}
+    {{/if}}
+
     {{#if showLeaveEditorModal}}
         {{gh-fullscreen-modal "leave-editor"
             confirm=(action "leaveEditor")
@@ -183,6 +190,7 @@
             post=post
             showSettingsMenu=ui.showSettingsMenu
             deletePost=(action "toggleDeletePostModal")
+            deleteFile=(action "toggleDeleteFileModal")
             updateSlug=updateSlug
             savePost=savePost
         }}

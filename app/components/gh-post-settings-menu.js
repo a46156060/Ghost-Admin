@@ -1,3 +1,4 @@
+import $ from 'jquery';
 import Component from '@ember/component';
 import SettingsMenuMixin from 'ghost-admin/mixins/settings-menu-component';
 import boundOneWay from 'ghost-admin/utils/bound-one-way';
@@ -90,6 +91,14 @@ export default Component.extend(SettingsMenuMixin, {
         return seoURL;
     }),
 
+    filesMimeTypes: or(
+        'application/zip',
+        'application/zip',
+        'application/x-zip-compressed',
+        'application/msword',
+        'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+    ),
+
     didReceiveAttrs() {
         this._super(...arguments);
 
@@ -120,6 +129,43 @@ export default Component.extend(SettingsMenuMixin, {
     },
 
     actions: {
+        triggerFileDialog(event) {
+            let fileInput = $(event.target)
+                .closest('.gh-upload-file')
+                .find('input[type="file"]');
+
+            if (fileInput.length > 0) {
+                // reset file input value before clicking so that the same image
+                // can be selected again
+                fileInput.val('');
+
+                // simulate click to open file dialog
+                // using jQuery because IE11 doesn't support MouseEvent
+                $(fileInput).click();
+            }
+        },
+
+        fileUploaded(property, results) {
+            if (results[0]) {
+                let post = this.get('post');
+                const filename = results[0].fileName;
+
+                post.set('file', filename);
+
+                return post.validate({property: 'file'}).then(() => {
+                    if (post.get('isNew')) {
+                        return;
+                    }
+
+                    return this.get('savePost').perform();
+                });
+            }
+        },
+
+        deleteFile() {
+            this.get('deleteFile')();
+        },
+
         showSubview(subview) {
             this._super(...arguments);
 

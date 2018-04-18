@@ -148,6 +148,10 @@ export default Controller.extend({
     /* actions ---------------------------------------------------------------*/
 
     actions: {
+        toggleDeleteFileModal() {
+            this.toggleProperty('showDeleteFileModal');
+        },
+
         updateScratch(mobiledoc) {
             this.set('post.scratch', mobiledoc);
 
