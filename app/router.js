@@ -33,6 +33,8 @@ Router.map(function () {
 
     this.route('posts', {path: '/'}, function () {});
 
+    this.route('contacts', {path: '/contacts'}, function () {});
+
     this.route('editor', function () {
         this.route('new', {path: ''});
         this.route('edit', {path: ':post_id'});

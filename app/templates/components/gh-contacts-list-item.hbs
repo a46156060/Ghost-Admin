@@ -1,0 +1,8 @@
+<h3 class="gh-content-entry-title">{{contact.name}}</h3>
+<p>{{contact.content}}</p>
+
+<section class="gh-content-entry-meta">
+     phone number: <span class="gh-content-entry-author">{{contact.phone_number}}</span>
+     &mdash; email: <span class="gh-content-entry-author">{{contact.email}}</span>
+     &mdash; time: {{gh-format-contact-time contact.created_at}}
+</section>
