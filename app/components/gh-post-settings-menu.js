@@ -163,7 +163,16 @@ export default Component.extend(SettingsMenuMixin, {
         },
 
         deleteFile() {
-            this.get('deleteFile')();
+            this.set('post.file', null);
+
+            if (this.get('post.isNew')) {
+                return;
+            }
+
+            this.get('savePost').perform().catch((error) => {
+                this.showError(error);
+                this.get('post').rollbackAttributes();
+            });
         },
 
         showSubview(subview) {
