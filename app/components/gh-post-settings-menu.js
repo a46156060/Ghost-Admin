@@ -163,7 +163,9 @@ export default Component.extend(SettingsMenuMixin, {
         },
 
         deleteFile() {
-            this.set('post.file', null);
+            let post = this.get('post');
+
+            post.set('file', '');
 
             if (this.get('post.isNew')) {
                 return;
